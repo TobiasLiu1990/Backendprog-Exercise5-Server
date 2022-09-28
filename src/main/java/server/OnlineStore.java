@@ -25,12 +25,15 @@ public class OnlineStore {
         );
 
         //Adding Servlet - To handle the actual page.
-        var servletHolder = new ServletHolder(new AddItemServlet());
-        webApp.addServlet(servletHolder, "/api/addItem");
+        var addItemServlet = new ServletHolder(new AddItemServlet());
+        webApp.addServlet(addItemServlet, "/api/addItem");
+
+        var listItemServlet = new ServletHolder(new ListItemServlet());
+        webApp.addServlet(listItemServlet, "/api/listItems");
 
         server.setHandler(webApp);
 
-        server.start();     //Starts server
+        server.start();
         logger.info("Server started on {}", server.getURI());
     }
 
