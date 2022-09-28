@@ -15,9 +15,18 @@ public class AddItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Get input from web
         String itemName = req.getParameter("itemName");
-        String itemPrice = req.getParameter("itemPrice");
-        String itemQuantity = req.getParameter("itemQuantity");
+        int itemPrice = Integer.parseInt(req.getParameter("itemPrice"));
+        int itemQuantity = Integer.parseInt(req.getParameter("itemQuantity"));
+
+        //Save the input to item object.
+        Item item = new Item(itemName, itemPrice, itemQuantity);
+
+        //Save the item object to storage
+        new Storage().saveItemToStorage(item);
+
+//        System.out.println(item + "\n\n");
 
         logger.info("\nAdded Item: \n" +
                         "Item name={} \n" +
