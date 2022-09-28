@@ -10,11 +10,6 @@ public class ItemRepository {
         items.add(item);
     }
 
-    public void showAllItemsInStorage() {
-        for (Item i : items) {
-            System.out.println(i);
-        }
-    }
 
     public ArrayList<Item> getItems() {
         return items;

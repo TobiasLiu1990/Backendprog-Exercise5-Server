@@ -29,8 +29,8 @@ public class OnlineStoreServer {
         var addItemServlet = new ServletHolder(new AddItemServlet(itemRepository)); //Send itemRepository to AddItemServlet to save inputs
         webApp.addServlet(addItemServlet, "/api/addItem");
 
-        var listItemServlet = new ServletHolder(new ItemStorageServlet());
-        webApp.addServlet(listItemServlet, "/api/listItems");
+        var listItemServlet = new ServletHolder(new ListItemServlet(itemRepository));
+        webApp.addServlet(listItemServlet, "/api/listItems/*");
 
         server.setHandler(webApp);
 
