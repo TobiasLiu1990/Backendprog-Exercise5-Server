@@ -2,11 +2,11 @@ package server;
 
 import java.util.ArrayList;
 
-public class Storage {
+public class ItemRepository {
 
     private ArrayList<Item> items = new ArrayList<>();
 
-    public void saveItemToStorage(Item item) {
+    public void addItem(Item item) {
         items.add(item);
     }
 

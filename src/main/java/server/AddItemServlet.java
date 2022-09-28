@@ -12,6 +12,11 @@ import java.io.IOException;
 public class AddItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(AddItemServlet.class);
+    private final ItemRepository itemRepository;
+
+    public AddItemServlet(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,14 +29,8 @@ public class AddItemServlet extends HttpServlet {
         Item item = new Item(itemName, itemPrice, itemQuantity);
 
         //Save the item object to storage
-        new Storage().saveItemToStorage(item);
+        itemRepository.addItem(item);
 
-//        System.out.println(item + "\n\n");
-
-        logger.info("\nAdded Item: \n" +
-                        "Item name={} \n" +
-                        "Item price={} \n" +
-                        "Item quantity={}",
-                itemName, itemPrice, itemQuantity);
+        logger.info("\nAdded Item:" + item);
     }
 }

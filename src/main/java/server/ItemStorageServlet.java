@@ -9,14 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class ListItemServlet extends HttpServlet {
+public class ItemStorageServlet extends HttpServlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(ListItemServlet.class);
-    private final Storage storage = new Storage();
+    private static final Logger logger = LoggerFactory.getLogger(ItemStorageServlet.class);
+//    private ItemRepository storage = new ItemRepository();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println(storage.getItems());
+//        resp.getWriter().println(storage.getItems());
 
 //        for (Item i : storage.getItems()) {
 //            resp.getWriter().println(
@@ -29,4 +29,9 @@ public class ListItemServlet extends HttpServlet {
 
         logger.info("Should list all items");
     }
+
+    public void addItemToStorage() {
+
+    }
+
 }

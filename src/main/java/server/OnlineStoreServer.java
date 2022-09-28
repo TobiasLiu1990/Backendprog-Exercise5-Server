@@ -7,12 +7,13 @@ import org.eclipse.jetty.webapp.WebAppContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OnlineStore {
+public class OnlineStoreServer {
 
     private final Server server = new Server(8080);
-    private final Logger logger = LoggerFactory.getLogger(OnlineStore.class);
+    private final Logger logger = LoggerFactory.getLogger(OnlineStoreServer.class);
+    private ItemRepository itemRepository = new ItemRepository();
 
-    public OnlineStore() throws Exception {
+    public OnlineStoreServer() throws Exception {
         startServer();
     }
 
@@ -25,10 +26,10 @@ public class OnlineStore {
         );
 
         //Adding Servlet - To handle the actual page.
-        var addItemServlet = new ServletHolder(new AddItemServlet());
+        var addItemServlet = new ServletHolder(new AddItemServlet(itemRepository)); //Send itemRepository to AddItemServlet to save inputs
         webApp.addServlet(addItemServlet, "/api/addItem");
 
-        var listItemServlet = new ServletHolder(new ListItemServlet());
+        var listItemServlet = new ServletHolder(new ItemStorageServlet());
         webApp.addServlet(listItemServlet, "/api/listItems");
 
         server.setHandler(webApp);
@@ -38,7 +39,7 @@ public class OnlineStore {
     }
 
     public static void main(String[] args) throws Exception {
-        var server = new OnlineStore();
+        var server = new OnlineStoreServer();
     }
 
 }

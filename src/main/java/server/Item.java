@@ -1,6 +1,7 @@
 package server;
 
 public class Item {
+
     private final String name;
     private final int price;
     private final int quantity;
@@ -10,6 +11,7 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
     }
+
 
     public String getName() {
         return name;
