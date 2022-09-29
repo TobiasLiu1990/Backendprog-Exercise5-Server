@@ -37,11 +37,7 @@ public class AddItemServlet extends HttpServlet {
 
 
         //DB (Can remove itemRepository if DB is added?)
-        try {
-            jdbcManager.addItemToDatabase(item);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        jdbcManager.addItemToDatabase(item);
 
 
         logger.info("\nAdded Item:" + item);

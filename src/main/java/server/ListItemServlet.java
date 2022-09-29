@@ -27,20 +27,24 @@ public class ListItemServlet extends HttpServlet {
         resp.setContentType("text/html");
         resp.getWriter().write("Here are the books at path: " + req.getPathInfo());
 
-        resp.getWriter().write("<ul>");
-        for (Item item : itemRepository.getItems()) {
-            resp.getWriter().write("<li>" + item + "</li>");
-        }
-        resp.getWriter().write("<ul>");
+//        resp.getWriter().write("<ul>");
+//        for (Item item : itemRepository.getItems()) {
+//            resp.getWriter().write("<li>" + item + "</li>");
+//        }
+//        resp.getWriter().write("<ul>");
 
 
         //Use DB instead to find item!
-        Item tempItem = jdbcManager.getItemFromDatabase();
+        int allItems = jdbcManager.countAllEntriesInDatabase();
 
+        for (int i = 0; i < allItems; i++) {
+            Item tempItem = jdbcManager.getItemFromDatabase(i);
+
+            resp.getWriter().write("<ul>");
+            resp.getWriter().write("<li>" + tempItem + "</li>");
+            resp.getWriter().write("<ul>");
+        }
 
         logger.info("Should list all items");
     }
-
-
-
 }
