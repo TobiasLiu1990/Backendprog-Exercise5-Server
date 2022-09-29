@@ -2,6 +2,7 @@ package server;
 
 import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -31,6 +32,7 @@ public class OnlineStoreServer {
         );
         if (sourceResources.exists()) {
             webApp.setBaseResource(sourceResources);    // Change the default path to src/main/resources, if exist.
+            webApp.setInitParameter(DefaultServlet.CONTEXT_INIT + "useFileMappedBuffer", "false");  //To avoid Jetty to lock files for changes.
         }
 
 
