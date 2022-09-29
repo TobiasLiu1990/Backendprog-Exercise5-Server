@@ -1,5 +1,6 @@
 package server;
 
+import database.jdbc.JDBCManager;
 import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
@@ -13,9 +14,10 @@ public class OnlineStoreServer {
 
     private final Server server = new Server(8080);
     private final Logger logger = LoggerFactory.getLogger(OnlineStoreServer.class);
-//    private final ItemRepository itemRepository = new ItemRepository();        //Without JSP
+
+    private final ItemRepository itemRepository = new ItemRepository();        //Without JSP
     //With JSP
-    private final ItemRepository itemRepository = ItemRepository.getInstance();  //With JSP
+//    private final ItemRepository itemRepository = ItemRepository.getInstance();  //With JSP
     //With JSP
 
     public OnlineStoreServer() throws Exception {

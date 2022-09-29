@@ -1,5 +1,6 @@
 package server;
 
+import database.jdbc.JDBCManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ public class AddItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(AddItemServlet.class);
     private final ItemRepository itemRepository;
+    private final JDBCManager jdbcManager = new JDBCManager();
 
     public AddItemServlet(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
