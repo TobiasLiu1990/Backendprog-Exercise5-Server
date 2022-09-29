@@ -36,24 +36,40 @@ public class JDBCManager {
         }
     }
 
-    //Method to retrieve all item from database
-    public Item getItemFromDatabase(int index) {
+    //Method to retrieve an item from database by id. (currently only used to print all out in a for-loop in ListItemServlet).
+    public Item getItemFromDatabase(int id) {
         String query = "SELECT * FROM items WHERE item_id = ?";
 
         try (PreparedStatement pStmt = conn.prepareStatement(query)) {
-            pStmt.setInt(1, index);
+            pStmt.setInt(1, id);
             ResultSet rs = pStmt.executeQuery();
 
             if (rs.next()) {
                 String itemName = rs.getString(2);
                 int itemPrice = rs.getInt(3);
-                String itemCategory = rs.getString(4);
-
+                String itemCategory = findItemsCategoryName(rs.getInt(4));      //Need to find the actual name of the id for category
                 return new Item(itemName, itemPrice, itemCategory);
             } else {
                 System.out.println("NO ITEM!");
                 return null;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //getItemFromDatabase() does not find the name of the category (only number connected).
+    //Need to find the actual name of the category an item is in.
+    public String findItemsCategoryName(int categoryId) {
+        String query = "SELECT Category.category_name FROM Category " +
+                "JOIN Items ON Category.category_id = Items.item_id where Category.category_id = ?";
+
+        try (PreparedStatement pStmt = conn.prepareStatement(query)) {
+            pStmt.setInt(1, categoryId);
+            ResultSet rs = pStmt.executeQuery();
+            rs.next();
+            return rs.getString(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,11 +87,10 @@ public class JDBCManager {
         return 0;
     }
 
-
     //Method to search for item.
 
-    //Method to show a category
 
+    //Method to show a category
 
 }
 

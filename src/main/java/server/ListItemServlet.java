@@ -37,13 +37,24 @@ public class ListItemServlet extends HttpServlet {
         //Use DB instead to find item!
         int allItems = jdbcManager.countAllEntriesInDatabase();
 
-        for (int i = 0; i < allItems; i++) {
+        resp.getWriter().write("<ul>");
+        for (int i = 1; i <= allItems; i++) {
             Item tempItem = jdbcManager.getItemFromDatabase(i);
-
-            resp.getWriter().write("<ul>");
             resp.getWriter().write("<li>" + tempItem + "</li>");
-            resp.getWriter().write("<ul>");
+            resp.getWriter().write("<hr>");
         }
+        resp.getWriter().write("<ul>");
+
+        /*
+                for (int i = 1; i <= allItems; i++) {
+            Item tempItem = jdbcManager.getItemFromDatabase(i);
+            resp.getWriter().write("<li>" + tempItem.getName() + "</li>");
+            resp.getWriter().write("<li>" + tempItem.getPrice() + "</li>");
+            resp.getWriter().write("<li>" + tempItem.getCategory() + "</li>");
+            resp.getWriter().write("<hr>");
+        }
+         */
+
 
         logger.info("Should list all items");
     }
