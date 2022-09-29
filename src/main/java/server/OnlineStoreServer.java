@@ -13,7 +13,10 @@ public class OnlineStoreServer {
 
     private final Server server = new Server(8080);
     private final Logger logger = LoggerFactory.getLogger(OnlineStoreServer.class);
-    private ItemRepository itemRepository = new ItemRepository();
+//    private final ItemRepository itemRepository = new ItemRepository();        //Without JSP
+    //With JSP
+    private final ItemRepository itemRepository = ItemRepository.getInstance();  //With JSP
+    //With JSP
 
     public OnlineStoreServer() throws Exception {
         startServer();
