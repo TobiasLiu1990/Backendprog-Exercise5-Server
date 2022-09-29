@@ -1,5 +1,6 @@
 package server;
 
+import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
@@ -18,21 +19,34 @@ public class OnlineStoreServer {
     }
 
 
-    public  void startServer() throws Exception {
-        //Instantiate a WebAbbContext to set a path to where to work from.
-        var webApp = new WebAppContext(
-                Resource.newClassPathResource("/webapp"),
-                "/"
+    public void startServer() throws Exception {
+        //Instantiate a WebAbbContext to set a path to where to work from. Refers to target/classes by default.
+        var targetResource = Resource.newClassPathResource("/webapp");
+        var webApp = new WebAppContext(targetResource, "/");
+
+
+        //Sets a different path to work from: src/main/resources.
+        var sourceResources = Resource.newResource(targetResource.getFile().toString()
+                .replace("target\\classes", "src\\main\\resources")
         );
+        if (sourceResources.exists()) {
+            webApp.setBaseResource(sourceResources);    // Change the default path to src/main/resources, if exist.
+        }
+
 
         //Adding Servlet - To handle the actual page.
         var addItemServlet = new ServletHolder(new AddItemServlet(itemRepository)); //Send itemRepository to AddItemServlet to save inputs
         webApp.addServlet(addItemServlet, "/api/addItem");
-
+        //Adding Servlet - To handle listing all items.
         var listItemServlet = new ServletHolder(new ListItemServlet(itemRepository));
         webApp.addServlet(listItemServlet, "/api/listItems/*");
 
+        //JSP
+        webApp.addServletContainerInitializer(new JettyJasperInitializer());    //Sets so all .jsp files are handled by jetty
+
+
         server.setHandler(webApp);
+
 
         server.start();
         logger.info("Server started on {}", server.getURI());

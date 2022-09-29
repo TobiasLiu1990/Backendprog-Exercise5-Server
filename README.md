@@ -26,7 +26,9 @@ Skapa en enkel nettbutikk
 
 * [x] Can also add org.logevents | logevents |0.3.3 in dependency 
 
-
+JSP - Översätter HTML till Servlet till en java.fil som komplieras.
+* [ ] JSP
+* [ ] Add dependency org.eclipse.jetty | apache-jsp | 11.0.12
 
 - Storage.html
   Nån ide o ens ha denna då man kan direkt koppla med ListItemServlet + index.html?
