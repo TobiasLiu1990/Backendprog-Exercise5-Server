@@ -1,6 +1,7 @@
 package server;
 
 import database.jdbc.JDBCManager;
+import jakarta.servlet.Servlet;
 import org.eclipse.jetty.apache.jsp.JettyJasperInitializer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
@@ -16,6 +17,7 @@ public class OnlineStoreServer {
     private final Logger logger = LoggerFactory.getLogger(OnlineStoreServer.class);
 
     private final ItemRepository itemRepository = new ItemRepository();        //Without JSP
+    private final JDBCManager jdbcManager = new JDBCManager();
     //With JSP
 //    private final ItemRepository itemRepository = ItemRepository.getInstance();  //With JSP
     //With JSP
@@ -42,10 +44,10 @@ public class OnlineStoreServer {
 
 
         //Adding Servlet - To handle the actual page.
-        var addItemServlet = new ServletHolder(new AddItemServlet(itemRepository)); //Send itemRepository to AddItemServlet to save inputs
+        var addItemServlet = new ServletHolder(new AddItemServlet(itemRepository, jdbcManager)); //Send itemRepository to AddItemServlet to save inputs
         webApp.addServlet(addItemServlet, "/api/addItem");
         //Adding Servlet - To handle listing all items.
-        var listItemServlet = new ServletHolder(new ListItemServlet(itemRepository));
+        var listItemServlet = new ServletHolder(new ListItemServlet(itemRepository, jdbcManager));
         webApp.addServlet(listItemServlet, "/api/listItems/*");
 
         //JSP

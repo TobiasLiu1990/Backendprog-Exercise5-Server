@@ -9,15 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AddItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(AddItemServlet.class);
     private final ItemRepository itemRepository;
-    private final JDBCManager jdbcManager = new JDBCManager();
+    private final JDBCManager jdbcManager;
 
-    public AddItemServlet(ItemRepository itemRepository) {
+    public AddItemServlet(ItemRepository itemRepository, JDBCManager jdbcManager) {
         this.itemRepository = itemRepository;
+        this.jdbcManager = jdbcManager;
     }
 
     @Override
@@ -32,6 +34,15 @@ public class AddItemServlet extends HttpServlet {
 
         //Save the item object to storage
         itemRepository.addItem(item);
+
+
+        //DB (Can remove itemRepository if DB is added?)
+        try {
+            jdbcManager.addItemToDatabase(item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
         logger.info("\nAdded Item:" + item);
     }

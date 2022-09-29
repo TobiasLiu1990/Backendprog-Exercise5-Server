@@ -13,6 +13,18 @@ public class Item {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return "Item: " + name + "\n" +

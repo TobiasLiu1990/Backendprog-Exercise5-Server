@@ -1,5 +1,6 @@
 package server;
 
+import database.jdbc.JDBCManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,9 +14,11 @@ public class ListItemServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(ListItemServlet.class);
     private final ItemRepository itemRepository;
+    private final JDBCManager jdbcManager;
 
-    public ListItemServlet(ItemRepository itemRepository) {
+    public ListItemServlet(ItemRepository itemRepository, JDBCManager jdbcManager) {
         this.itemRepository = itemRepository;
+        this.jdbcManager = jdbcManager;
     }
 
 
@@ -30,7 +33,14 @@ public class ListItemServlet extends HttpServlet {
         }
         resp.getWriter().write("<ul>");
 
+
+        //Use DB instead to find item!
+        Item tempItem = jdbcManager.getItemFromDatabase();
+
+
         logger.info("Should list all items");
     }
+
+
 
 }
