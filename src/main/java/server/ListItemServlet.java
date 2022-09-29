@@ -22,19 +22,15 @@ public class ListItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
+        resp.getWriter().write("Here are the books at path: " + req.getPathInfo());
 
-        resp.getWriter().write("Here are the books at path: /" + req.getPathInfo() + "\n");
-
-
+        resp.getWriter().write("<ul>");
         for (Item item : itemRepository.getItems()) {
-            resp.getWriter().write("<div>" + item + "</div>");
+            resp.getWriter().write("<li>" + item + "</li>");
         }
+        resp.getWriter().write("<ul>");
 
         logger.info("Should list all items");
-    }
-
-    public void addItemToStorage() {
-
     }
 
 }

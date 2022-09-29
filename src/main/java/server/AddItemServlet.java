@@ -23,10 +23,10 @@ public class AddItemServlet extends HttpServlet {
         //Get input from web
         String itemName = req.getParameter("itemName");
         int itemPrice = Integer.parseInt(req.getParameter("itemPrice"));
-        int itemQuantity = Integer.parseInt(req.getParameter("itemQuantity"));
+        String itemCategory = req.getParameter("itemCategory");
 
         //Save the input to item object.
-        Item item = new Item(itemName, itemPrice, itemQuantity);
+        Item item = new Item(itemName, itemPrice, itemCategory);
 
         //Save the item object to storage
         itemRepository.addItem(item);
