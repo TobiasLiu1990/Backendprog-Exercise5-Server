@@ -1,6 +1,9 @@
 package server;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import database.jdbc.JDBCManager;
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,24 +40,29 @@ public class ListItemServlet extends HttpServlet {
         //Use DB instead to find item
         int allItems = jdbcManager.countAllEntriesInDatabase();
 
-        resp.getWriter().write("<ul>");
+        //L6 - JSON
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         for (int i = 1; i <= allItems; i++) {
             Item tempItem = jdbcManager.getItemFromDatabase(i);
-            resp.getWriter().write("<li>" + tempItem + "</li>");
-            resp.getWriter().write("<hr>");
-        }
-        resp.getWriter().write("</ul>");
 
-        /*
-                for (int i = 1; i <= allItems; i++) {
-            Item tempItem = jdbcManager.getItemFromDatabase(i);
-            resp.getWriter().write("<li>" + tempItem.getName() + "</li>");
-            resp.getWriter().write("<li>" + tempItem.getPrice() + "</li>");
-            resp.getWriter().write("<li>" + tempItem.getCategory() + "</li>");
-            resp.getWriter().write("<hr>");
+            arrayBuilder.add(Json.createObjectBuilder()
+                    .add("name", tempItem.getName())
+                    .add("price", tempItem.getPrice())
+                    .add("category", tempItem.getCategory()));
         }
-         */
 
+        if ("application/json".equals(req.getHeader("Accept"))) {
+            resp.getWriter().write(arrayBuilder.build().toString());
+        } else {
+            resp.getWriter().write("<ul>");
+            for (int i = 1; i <= allItems; i++) {
+                Item tempItem = jdbcManager.getItemFromDatabase(i);
+
+                resp.getWriter().write("<li>" + tempItem + "</li>");
+                resp.getWriter().write("<hr>");
+            }
+            resp.getWriter().write("</ul>");
+        }
 
         logger.info("Should list all items");
     }
