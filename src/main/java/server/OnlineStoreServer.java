@@ -51,7 +51,7 @@ public class OnlineStoreServer {
         webApp.addServlet(listItemServlet, "/api/listItems/*");
 
         //JSP
-        webApp.addServletContainerInitializer(new JettyJasperInitializer());    //Sets so all .jsp files are handled by jetty
+//        webApp.addServletContainerInitializer(new JettyJasperInitializer());    //Sets so all .jsp files are handled by jetty
 
 
         server.setHandler(webApp);

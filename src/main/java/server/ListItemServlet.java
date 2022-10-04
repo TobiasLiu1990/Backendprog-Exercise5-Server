@@ -23,7 +23,7 @@ public class ListItemServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         resp.getWriter().write("Here are the books at path: " + req.getPathInfo());
 
@@ -34,7 +34,7 @@ public class ListItemServlet extends HttpServlet {
 //        resp.getWriter().write("<ul>");
 
 
-        //Use DB instead to find item!
+        //Use DB instead to find item
         int allItems = jdbcManager.countAllEntriesInDatabase();
 
         resp.getWriter().write("<ul>");
@@ -43,7 +43,7 @@ public class ListItemServlet extends HttpServlet {
             resp.getWriter().write("<li>" + tempItem + "</li>");
             resp.getWriter().write("<hr>");
         }
-        resp.getWriter().write("<ul>");
+        resp.getWriter().write("</ul>");
 
         /*
                 for (int i = 1; i <= allItems; i++) {

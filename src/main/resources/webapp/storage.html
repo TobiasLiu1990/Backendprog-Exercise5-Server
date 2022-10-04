@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Storage</title>
-    </head>
-    <body>
-        <form action="/api/listItems">
-            <h2>All items in store</h2>
-            <button>Show</button>
-        </form>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Storage</title>
+</head>
+<body>
+<h2>All items in store</h2>
+<button id="button">Show</button>
+
+<h2>Here are the books</h2>
+<div id="itemList"></div>
+</body>
+<script>
+    document.getElementById("button").onclick = async function () {
+        document.getElementById("itemList").innerHTML = "loading";
+
+        const res = await fetch("/api/listItems");
+        document.getElementById("itemList").innerHTML = await res.text();
+    }
+
+</script>
 </html>
