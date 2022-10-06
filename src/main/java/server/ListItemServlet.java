@@ -40,19 +40,21 @@ public class ListItemServlet extends HttpServlet {
         //Use DB instead to find item
         int allItems = jdbcManager.countAllEntriesInDatabase();
 
-        //L6 - JSON
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        //Lecture 6 - JSON
+        JsonArrayBuilder result = Json.createArrayBuilder();
         for (int i = 1; i <= allItems; i++) {
             Item tempItem = jdbcManager.getItemFromDatabase(i);
 
-            arrayBuilder.add(Json.createObjectBuilder()
+            result.add(Json.createObjectBuilder()
                     .add("name", tempItem.getName())
                     .add("price", tempItem.getPrice())
-                    .add("category", tempItem.getCategory()));
+                    .add("category", tempItem.getCategory())
+            );
         }
 
         if ("application/json".equals(req.getHeader("Accept"))) {
-            resp.getWriter().write(arrayBuilder.build().toString());
+            resp.getWriter().write(result.build().toString());
         } else {
             resp.getWriter().write("<ul>");
             for (int i = 1; i <= allItems; i++) {

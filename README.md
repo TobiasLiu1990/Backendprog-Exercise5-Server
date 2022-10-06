@@ -32,5 +32,13 @@ JSP - Översätter HTML till Servlet till en java.fil som komplieras.
   * Added changes to OnlineStoreServer and ItemRepository and created a items.jsp file for this.
 
 
-- Storage.html
-  Nån ide o ens ha denna då man kan direkt koppla med ListItemServlet + index.html?
+
+#### JSON
+JsonArrayBuilder.
+To use JSON instead from Servlets we need:
+- API to handle json
+- Implementation
+
+- jakarta.json
+- orc.eclipse.parsson
+
